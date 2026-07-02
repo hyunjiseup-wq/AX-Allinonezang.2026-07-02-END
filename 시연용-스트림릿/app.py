@@ -18,7 +18,7 @@ import anthropic
 import streamlit as st
 
 APP_DIR = Path(__file__).parent
-PROJECT_DIR = APP_DIR.parent
+PROJECT_DIR = APP_DIR.parent / "[02] 올인원장"
 sys.path.insert(0, str(PROJECT_DIR / "scripts"))
 from clean_keywords import clean  # noqa: E402  (실제 정제 스크립트 재사용)
 
