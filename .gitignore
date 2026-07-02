@@ -1,0 +1,20 @@
+# Secrets — never commit
+.env
+*.env
+.streamlit/secrets.toml
+
+# Personal experiment, excluded from hackathon submission
+개인실험-제출제외/
+
+# Demo-only web UI, excluded from hackathon submission
+시연용-스트림릿/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>올인원장 홍보 파이프라인 — AX 해커톤 발표자료</title>
+<style>
+  :root{
+    --font-family:'Pretendard','Pretendard Variable',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --accent:#E8491D;
+    --ink:#17181A;
+    --sub:#6B6E76;
+    --line:#E5E3DD;
+    --page-bg:#F1F0EB;
+    --card:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;font-family:var(--font-family);background:var(--page-bg);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .deck{display:flex;flex-direction:column;align-items:center;gap:28px;padding:40px 16px 80px;}
+  .slide{
+    width:min(1180px,100%);
+    background:var(--card);
+    box-shadow:0 8px 28px rgba(0,0,0,.08);
+    position:relative;
+    padding:56px 64px 48px;
+    min-height:640px;
+    display:flex;
+    flex-direction:column;
+    border-left:8px solid var(--accent);
+  }
+  .kicker{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:var(--sub);letter-spacing:.02em;margin-bottom:28px;}
+  .kicker b{color:var(--ink);font-weight:700;}
+  .kicker .badge{color:var(--accent);font-weight:700;letter-spacing:.08em;}
+  .page-no{font-variant-numeric:tabular-nums;color:var(--sub);font-size:14px;}
+  h1.title{font-size:44px;line-height:1.28;font-weight:800;margin:0 0 14px;letter-spacing:-.01em;}
+  h1.title .accent{color:var(--accent);}
+  .lead{font-size:17px;color:var(--sub);margin:0 0 32px;}
+  .rule{border:none;border-top:1px solid var(--line);margin:0 0 32px;}
+  .footer-line{margin-top:auto;padding-top:24px;border-top:1px solid var(--line);font-size:15px;font-weight:600;}
+  .footer-line .accent{color:var(--accent);}
+
+  /* cover */
+  .cover{justify-content:center;min-height:760px;}
+  .cover .eyebrow{font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--sub);margin-bottom:6px;}
+  .cover .track{font-size:13px;color:var(--sub);margin-bottom:36px;}
+  .cover h1{font-size:64px;line-height:1.18;font-weight:800;margin:0 0 28px;}
+  .cover .sub{font-size:21px;color:var(--ink);margin-bottom:auto;}
+  .cover .sub .accent{color:var(--accent);font-weight:700;}
+  .cover .meta{display:flex;justify-content:space-between;font-size:14px;color:var(--sub);border-top:1px solid var(--line);padding-top:22px;margin-top:40px;}
+  .cover .meta b{color:var(--ink);}
+
+  /* quotes */
+  .quotes{display:flex;flex-direction:column;gap:20px;margin-bottom:32px;}
+  .quotes blockquote{margin:0;font-size:26px;font-style:italic;font-weight:600;padding-left:20px;border-left:3px solid var(--line);}
+
+  /* reframe */
+  .reframe{display:flex;flex-direction:column;gap:18px;margin-bottom:8px;}
+  .reframe .box{padding:22px 26px;border:1px solid var(--line);}
+  .reframe .label{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--sub);margin-bottom:8px;}
+  .reframe .box.was .label{color:var(--sub);}
+  .reframe .box.was p{color:var(--sub);text-decoration:line-through;text-decoration-color:var(--line);}
+  .reframe .box.real{border-color:var(--accent);}
+  .reframe .box.real .label{color:var(--accent);}
+  .reframe p{font-size:24px;font-weight:700;margin:0;}
+
+  /* trigger grid */
+  .trigger-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);margin-bottom:24px;}
+  .trigger-grid .col{padding:26px 24px 0;border-right:1px solid var(--line);}
+  .trigger-grid .col:last-child{border-right:none;}
+  .trigger-grid .ch{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--sub);margin-bottom:14px;}
+  .trigger-grid .ch.accent{color:var(--accent);}
+  .trigger-grid .word{font-size:34px;font-weight:800;margin-bottom:6px;}
+  .trigger-grid .en{font-size:13px;color:var(--sub);}
+
+  /* rules table */
+  table.rules{width:100%;border-collapse:collapse;margin-bottom:20px;}
+  table.rules th{text-align:left;font-size:13px;color:var(--sub);font-weight:700;padding:10px 16px;border-bottom:2px solid var(--ink);}
+  table.rules th.accent{color:var(--accent);}
+  table.rules td{padding:16px 16px;font-size:16px;border-bottom:1px solid var(--line);vertical-align:top;}
+  table.rules td .big{font-size:22px;font-weight:800;}
+  table.rules td .note{display:block;font-size:12px;color:var(--sub);margin-top:2px;}
+  table.rules td .accent{color:var(--accent);font-weight:700;}
+
+  /* reason cards */
+  .reason-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:24px;}
+  .reason-card{border:1px solid var(--line);padding:22px 22px 26px;}
+  .reason-card .ch{font-size:12px;font-weight:700;color:var(--sub);letter-spacing:.06em;margin-bottom:2px;}
+  .reason-card .ch .accent{color:var(--accent);}
+  .reason-card .ch-line{width:24px;height:2px;background:var(--ink);margin:8px 0 14px;}
+  .reason-card h3{font-size:20px;line-height:1.4;margin:0 0 12px;}
+  .reason-card p{font-size:14px;color:var(--sub);line-height:1.6;margin:0 0 8px;}
+  .reason-card p b{color:var(--ink);}
+
+  /* case cards (before/after) */
+  .case-meta{font-size:14px;color:var(--sub);margin-bottom:20px;}
+  .case-meta b{color:var(--ink);}
+  .case-meta .accent{color:var(--accent);font-weight:700;}
+  .case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:16px;}
+  .case-card{border:1px solid var(--line);padding:18px 18px 20px;}
+  .case-card .hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;}
+  .case-card .hd .ch{font-size:12px;font-weight:700;color:var(--sub);}
+  .case-card .hd .ch.accent{color:var(--accent);}
+  .case-card .hd .cnt{font-size:12px;color:var(--sub);}
+  .case-card .ttl{font-weight:700;font-size:14px;margin:0 0 10px;line-height:1.5;}
+  .case-card p{font-size:13px;color:var(--sub);line-height:1.7;margin:0;white-space:pre-line;}
+  .case-card .tags{font-size:12px;color:var(--accent);margin-top:10px;line-height:1.8;}
+  .case-card .cta-btn{display:inline-block;margin-top:10px;font-size:13px;font-weight:700;border:1px solid var(--ink);padding:6px 12px;}
+
+  /* split panel */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:24px;}
+  .split .panel{border:1px solid var(--line);padding:24px 24px 22px;}
+  .split .panel.judgment{border-color:var(--accent);}
+  .split .eyebrow{font-size:12px;color:var(--sub);margin-bottom:10px;}
+  .split .tag{font-size:20px;font-weight:800;margin:0 0 4px;}
+  .split .en{font-size:11px;letter-spacing:.08em;color:var(--sub);margin-bottom:14px;}
+  .split code{display:block;background:#F5F4EF;padding:8px 12px;font-size:13px;margin-bottom:12px;}
+  .split .desc{font-size:13px;color:var(--sub);line-height:1.7;}
+  .split .desc b{color:var(--ink);}
+
+  /* pipeline steps */
+  .pipeline{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px;}
+  .pipeline .step{border:1px solid var(--line);padding:18px 16px;}
+  .pipeline .num{width:30px;height:30px;border-radius:50%;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-weight:700;margin-bottom:12px;}
+  .pipeline .step:nth-child(n+2) .num{border-color:var(--accent);color:var(--accent);}
+  .pipeline .tag{font-size:11px;color:var(--sub);margin-bottom:6px;}
+  .pipeline .tag.accent{color:var(--accent);}
+  .pipeline h4{font-size:20px;margin:0 0 10px;}
+  .pipeline code{display:block;background:#F5F4EF;padding:6px 8px;font-size:12px;margin-bottom:10px;}
+  .pipeline ul{margin:0;padding-left:16px;font-size:12px;color:var(--sub);line-height:1.8;}
+  .pipeline .tool{font-size:11px;color:var(--sub);margin-top:8px;}
+  .flow-line{font-size:13px;color:var(--sub);display:flex;justify-content:space-between;margin-bottom:20px;}
+
+  /* stats */
+  .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:20px;}
+  .stat-card{border:1px solid var(--line);padding:22px;}
+  .stat-card .tag{font-size:12px;color:var(--sub);margin-bottom:14px;}
+  .stat-card .num{font-size:52px;font-weight:800;line-height:1;margin-bottom:10px;}
+  .stat-card .num.accent{color:var(--accent);}
+  .stat-card .desc{font-size:13px;color:var(--sub);line-height:1.6;}
+  .stat-card .desc b{color:var(--ink);}
+  .note-line{font-size:14px;color:var(--sub);margin-bottom:24px;}
+  .note-line b{color:var(--ink);}
+
+  /* recovery */
+  .recover-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:20px;}
+  .recover-card{border:1px solid var(--line);padding:24px;}
+  .recover-card .tag{font-size:12px;font-weight:700;color:var(--accent);margin-bottom:10px;}
+  .recover-card h3{font-size:20px;margin:0 0 12px;line-height:1.5;}
+  .recover-card h3 .sub{display:block;font-weight:400;color:var(--sub);font-size:16px;margin-top:2px;}
+  .recover-card p{font-size:13px;color:var(--sub);line-height:1.7;margin:0 0 14px;}
+  .recover-card .highlight{background:#F5F4EF;padding:10px 14px;font-weight:700;font-size:13px;margin-bottom:12px;}
+  .recover-card .result{font-size:13px;font-weight:700;}
+  .recover-card .result .accent{color:var(--accent);}
+
+  /* limits/next */
+  .limit-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:8px;}
+  .limit-grid .col-label{font-size:12px;font-weight:700;color:var(--sub);letter-spacing:.04em;border-bottom:2px solid var(--line);padding-bottom:10px;margin-bottom:16px;}
+  .limit-grid .col.next .col-label{color:var(--accent);border-color:var(--accent);}
+  .limit-item{display:flex;gap:14px;margin-bottom:18px;}
+  .limit-item .n{font-size:13px;font-weight:700;color:var(--sub);min-width:20px;}
+  .limit-grid .col.next .limit-item .n{color:var(--accent);}
+  .limit-item b{display:block;font-size:15px;margin-bottom:3px;}
+  .limit-item span{font-size:13px;color:var(--sub);}
+
+  /* appendix table */
+  table.matrix{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:22px;}
+  table.matrix th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--ink);font-size:12px;}
+  table.matrix th.accent{color:var(--accent);}
+  table.matrix td{padding:12px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.6;}
+  table.matrix td b{display:block;}
+  table.matrix td.type b{font-size:15px;}
+  table.matrix td.type span{font-size:11px;color:var(--sub);}
+  .tone-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:16px;}
+  .tone-grid .tone{border-top:2px solid var(--line);padding-top:10px;}
+  .tone-grid .tone.accent{border-color:var(--accent);}
+  .tone-grid .tone b{display:block;font-size:13px;margin-bottom:6px;color:var(--accent);}
+  .tone-grid .tone div{font-size:11px;color:var(--sub);line-height:1.7;}
+
+  table.decisions{width:100%;border-collapse:collapse;font-size:12.5px;}
+  table.decisions th{text-align:left;padding:10px 10px;border-bottom:2px solid var(--ink);font-size:11px;color:var(--sub);}
+  table.decisions td{padding:14px 10px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.6;}
+  table.decisions td.num{color:var(--sub);font-weight:700;}
+  table.decisions td b{display:block;margin-bottom:2px;}
+
+  .miniblock{border:1px solid var(--line);padding:16px 18px;margin-bottom:20px;}
+  .miniblock .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+  .miniblock .g4 div .n{font-size:22px;font-weight:800;}
+  .miniblock .g4 div .n.accent{color:var(--accent);}
+  .miniblock .g4 div p{font-size:11px;color:var(--sub);margin:4px 0 0;line-height:1.5;}
+
+  @media (max-width:860px){
+    .slide{padding:32px 24px 28px;}
+    h1.title{font-size:30px;}
+    .trigger-grid,.reason-grid,.case-grid,.split,.pipeline,.stat-grid,.recover-grid,.limit-grid,.tone-grid,.miniblock .g4{grid-template-columns:1fr;}
+    .trigger-grid .col{border-right:none;border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:6px;}
+  }
+  @media print{
+    html,body{background:#fff;}
+    .deck{gap:0;padding:0;}
+    .slide{box-shadow:none;page-break-after:always;width:100%;}
+  }
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- 01 : cover -->
+  <section class="slide cover">
+    <div class="eyebrow">AX HACKATHON · [02] 올인원장</div>
+    <div class="track">마케팅 / PM 트랙 · 개인 과제 · 3시간</div>
+    <h1>키워드만 넣으면 3채널 톤이<br><span class="accent">다르게</span> 나오는 규칙 설계</h1>
+    <div class="sub">채널마다 다른 건 글이 아니라<br><span class="accent">심리 트리거</span>입니다</div>
+    <div class="meta"><span>발표자 · <b>hyunjiseup</b></span><span><b>2026.07</b> · 라이브 6분</span></div>
+  </section>
+
+  <!-- 02 -->
+  <section class="slide">
+    <div class="kicker"><span><b>열기</b> · 02 / 13</span><span class="page-no">02 / 13</span></div>
+    <div class="lead" style="font-size:15px;margin-bottom:34px;">학원 원장의 하루, 익숙한 혼잣말들 —</div>
+    <div class="quotes">
+      <blockquote>“ 오늘도 블로그·인스타·카톡에 뭘 올려야 하지… ”</blockquote>
+      <blockquote>“ 1건 쓰는 데 두어 시간이 훅 가네. ”</blockquote>
+      <blockquote>“ 결국 어제 것 그대로 세 군데에 붙였다. ”</blockquote>
+    </div>
+    <div class="footer-line">홍보를 <span class="accent">안 하는</span> 게 아니라, <span class="accent">못 하고</span> 있습니다.</div>
+  </section>
+
+  <!-- 03 -->
+  <section class="slide">
+    <div class="kicker"><span><b>열기</b> · 03 / 13</span><span class="page-no">03 / 13</span></div>
+    <h1 class="title">문제 재정의</h1>
+    <div class="lead">진짜 문제는 "복붙"이 아니었습니다.</div>
+    <hr class="rule">
+    <div class="reframe">
+      <div class="box was"><div class="label">문제 가정</div><p>"AI로 3채널 글을 대신 써주기"</p></div>
+      <div class="box real"><div class="label">진짜 문제</div><p>채널마다 다른 심리 트리거를,<br>새 데이터에도 재현되게 규칙화하기</p></div>
+    </div>
+    <div class="footer-line">이 과제의 난이도는 <b>글쓰기</b>가 아니라, <span class="accent">판단을 규칙으로 고정하는 것</span>에 있었습니다.</div>
+  </section>
+
+  <!-- 04 -->
+  <section class="slide">
+    <div class="kicker"><span><b>본론</b> · 04 / 13 · CORE MESSAGE</span><span class="page-no">04 / 13</span></div>
+    <h1 class="title">채널마다 다른 것은<br>글자 수가 아니라 <span class="accent">심리 트리거</span>다.</h1>
+    <hr class="rule">
+    <div class="trigger-grid">
+      <div class="col"><div class="ch">BLOG</div><div class="word">신뢰</div><div class="en">Trust · 정보 신뢰도</div></div>
+      <div class="col"><div class="ch accent">INSTAGRAM</div><div class="word">공감</div><div class="en">Empathy · 감성 공명</div></div>
+      <div class="col"><div class="ch">KAKAO</div><div class="word">행동</div><div class="en">Action · 즉각 전환</div></div>
+    </div>
+    <div class="footer-line">이 3가지를 즉흥 판단 없이 <span class="accent">규칙으로 고정</span>했습니다.</div>
+  </section>
+
+  <!-- 05 -->
+  <section class="slide">
+    <div class="kicker"><span><b>본론</b> · 05 / 13</span><span class="page-no">05 / 13</span></div>
+    <h1 class="title">채널별 <span class="accent">규칙표</span></h1>
+    <div class="lead">개념(신뢰·공감·행동)을 4개 항목의 규칙으로 착지시킵니다.</div>
+    <table class="rules">
+      <thead><tr><th>항목</th><th>BLOG · 신뢰</th><th class="accent">INSTAGRAM · 공감</th><th>KAKAO · 행동</th></tr></thead>
+      <tbody>
+        <tr><td>길이</td><td><span class="big">500자↑</span></td><td>150자 이내</td><td>180자 이내</td></tr>
+        <tr><td>해시태그</td><td>없음</td><td><span class="big accent">5개 고정</span><span class="note">#올인원장 #학원관리 + 3</span></td><td>없음</td></tr>
+        <tr><td>이모지</td><td>없음</td><td>1개 내외</td><td><span class="big">1~2개</span><span class="note">3개↑는 스팸</span></td></tr>
+        <tr><td>CTA</td><td>부드러운 유도</td><td>"저장해두세요"</td><td><span class="big">명령형 + 링크</span><span class="note accent">링크 필수</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 06 -->
+  <section class="slide">
+    <div class="kicker"><span><b>본론</b> · 06 / 13</span><span class="page-no">06 / 13</span></div>
+    <h1 class="title">규칙의 <span class="accent">근거</span> 3개</h1>
+    <div class="lead">"왜 그렇게 정했나요?" — 채널별 규칙엔 각각 마케팅 근거가 있습니다.</div>
+    <hr class="rule">
+    <div class="reason-grid">
+      <div class="reason-card">
+        <div class="ch">BLOG · 신뢰</div><div class="ch-line"></div>
+        <h3>이모지·해시태그를<br>넣지 않습니다</h3>
+        <p>검색으로 들어오는 예비 원장에게는 <b>정보 신뢰도가 우선</b>입니다.</p>
+        <p>이모지가 많으면 광고성 글로 인식되어 이탈률이 올라갑니다.</p>
+      </div>
+      <div class="reason-card">
+        <div class="ch accent">INSTAGRAM · 공감</div><div class="ch-line"></div>
+        <h3>해시태그 2개는<br>고정합니다</h3>
+        <p>케이스마다 바뀌는 3개만으론 유입이 분산됩니다.</p>
+        <p><b>#올인원장 #학원관리</b> 고정 2개가 브랜드 검색 시 누적 노출을 쌓습니다.</p>
+      </div>
+      <div class="reason-card">
+        <div class="ch">KAKAO · 행동</div><div class="ch-line"></div>
+        <h3>링크를 반드시<br>넣습니다</h3>
+        <p>링크 없는 텍스트만 있으면 <b>전환율이 급락</b>합니다.</p>
+        <p>이미 관심 있는 팔로워에게 망설임 없이 행동할 통로를 줘야 채널의 존재 이유가 삽니다.</p>
+      </div>
+    </div>
+    <div class="footer-line">규칙은 즉흥 판단이 아니라 <span class="accent">마케팅 근거</span>에서 나옵니다.</div>
+  </section>
+
+  <!-- 07 -->
+  <section class="slide">
+    <div class="kicker"><span><b>본론</b> · 07 / 13 · BEFORE / AFTER</span><span class="page-no">07 / 13</span></div>
+    <h1 class="title">같은 키워드, 다른 <span class="accent">심리 트리거</span></h1>
+    <div class="case-meta">케이스 #002 · 이벤트 · <b>여름방학 특강, 선착순 30명</b> · tone: <span class="accent">긴급한</span></div>
+    <hr class="rule">
+    <div class="case-grid">
+      <div class="case-card">
+        <div class="hd"><span class="ch">BLOG · 신뢰</span><span class="cnt">575자</span></div>
+        <p class="ttl">[여름방학 특강] 에듀플러스 영어학원, 선착순 30명 등록 할인 안내</p>
+        <p>## 방학, 부족한 영어 실력을 끌어올릴 마지막 기회
+여름방학은 평소 시간이 부족해 못했던 부분을 집중적으로 채울 수 있는 시기입니다. 에듀플러스 영어학원은 이번 여름방학을 맞아 레벨별 집중 커리큘럼으로 특강을 준비했습니다…
+
+## 7월 10일까지, 서두르셔야 하는 이유
+이번 특강은 7월 10일까지 등록하는 경우에만 할인이 적용됩니다. 정원 30명이 먼저 채워지면 마감됩니다…
+… 본문 계속</p>
+      </div>
+      <div class="case-card">
+        <div class="hd"><span class="ch accent">INSTAGRAM · 공감</span><span class="cnt">80자</span></div>
+        <p>⏰ 여름방학 특강, 선착순 30명 마감임박!
+
+에듀플러스 영어학원 등록 할인은 7월 10일까지. 작년엔 일주일 만에 마감됐어요, 지금 확인하세요.</p>
+        <div class="tags">#올인원장 #학원관리<br>#여름방학특강 #영어학원 #선착순마감</div>
+      </div>
+      <div class="case-card">
+        <div class="hd"><span class="ch">KAKAO · 행동</span><span class="cnt">79자</span></div>
+        <p>🔥 [마감임박] 여름방학 특강 선착순 30명!
+
+에듀플러스 영어학원 등록 할인 ~7/10까지.
+자리 얼마 안 남았어요</p>
+        <div class="cta-btn">→ 지금 신청하기 [링크]</div>
+      </div>
+    </div>
+    <div class="footer-line">같은 키워드 · 다른 심리 트리거 — 본문 길이 <span class="accent">7배</span> 차이</div>
+  </section>
+
+  <!-- 08 -->
+  <section class="slide">
+    <div class="kicker"><span><b>본론</b> · 08 / 13</span><span class="page-no">08 / 13</span></div>
+    <h1 class="title"><span class="accent">코드</span>가 할 일과 <span class="accent">판단</span>이 할 일을 갈랐다</h1>
+    <div class="lead" style="text-decoration:line-through;text-decoration-color:var(--line);">재현성은 완성된 문장에서 나오지 않습니다.</div>
+    <hr class="rule">
+    <div class="split">
+      <div class="panel code">
+        <div class="eyebrow">① 코드가 할 일</div>
+        <div class="tag">결정론</div><div class="en">DETERMINISTIC</div>
+        <code>scripts/clean_keywords.py</code>
+        <div class="desc">중복 판정 · tone 정규화 · 결측 보완<br><b>"정답이 있는 규칙"</b> — 실행할 때마다 같은 답</div>
+      </div>
+      <div class="panel judgment">
+        <div class="eyebrow">② 판단이 할 일</div>
+        <div class="tag">규칙을 따르는 판단</div><div class="en">RULE-GUIDED JUDGMENT</div>
+        <code>/insight · /generate · /review</code>
+        <div class="desc">채널 규칙 + type 매핑 적용<br><b>"규칙표에 없는 경우"</b> — 문맥을 해석해 규칙 안으로 편입</div>
+      </div>
+    </div>
+    <div class="footer-line">재현성은 완성된 문장이 아니라, <span class="accent">코드 + 규칙</span>에서 나옵니다.</div>
+  </section>
+
+  <!-- 09 -->
+  <section class="slide">
+    <div class="kicker"><span><b>본론</b> · 09 / 13</span><span class="page-no">09 / 13</span></div>
+    <h1 class="title">스킬 <span class="accent">4단계</span> 파이프라인</h1>
+    <div class="lead">새 keywords_input.csv를 넣으면 일어나는 일 —</div>
+    <div class="pipeline">
+      <div class="step"><div class="num">①</div><div class="tag">결정론 · 코드</div><h4>정제</h4><code>clean_keywords.py</code><ul><li>중복 판정</li><li>tone 정규화</li><li>결측 보완</li></ul><div class="tool">Python · LLM 불필요</div></div>
+      <div class="step"><div class="num">②</div><div class="tag accent">판단 · 분류</div><h4>전략 확정</h4><code>/insight</code><ul><li>채널 규칙 적용</li><li>type별 매핑</li><li>예외 처리 결정</li></ul><div class="tool">Claude Code 스킬</div></div>
+      <div class="step"><div class="num">③</div><div class="tag accent">판단 · 생성</div><h4>3채널 생성</h4><code>/generate</code><ul><li>블로그 · 인스타</li><li>카카오 초안</li><li>케이스마다</li></ul><div class="tool">Claude Code 스킬</div></div>
+      <div class="step"><div class="num">④</div><div class="tag accent">판단 · 검증</div><h4>검토 · 보완</h4><code>/review</code><ul><li>글자 수 채점</li><li>톤 차별화 검증</li><li>미달 시 보완</li></ul><div class="tool">Claude Code 스킬</div></div>
+    </div>
+    <div class="flow-line"><span>keywords_input.csv →</span><span>→ output/blog · instagram · kakao_draft.md</span></div>
+    <div class="footer-line">새 CSV가 들어와도 <span class="accent">같은 4단계</span>로 흐릅니다. 판단의 순서가 규칙화되어 있기 때문입니다.</div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide">
+    <div class="kicker"><span><b>증명</b> · 10 / 13</span><span class="page-no">10 / 13</span></div>
+    <h1 class="title">재현성 <span class="accent">실측</span></h1>
+    <div class="lead">말로 하지 않고 <b style="color:var(--ink)">숫자</b>로 —</div>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="tag">01 · 정제</div><div class="num">25 → 24</div><div class="desc">결정론적 처리<br>중복 1건 · 톤 정규화 1건<br>결측 보완 2건</div></div>
+      <div class="stat-card"><div class="tag">02 · 산출물</div><div class="num accent">72개</div><div class="desc">24건 × 3채널<br>톤 차별화 100% 준수<br>복붙 0건</div></div>
+      <div class="stat-card"><div class="tag">03 · 재현 검증</div><div class="num accent">100%</div><div class="desc">더미 CSV 2세트<br>8건 · 5건 재실행 → 동일 로직<br>처리 결과 100% 일치</div></div>
+    </div>
+    <div class="note-line">규칙표에 없던 <b>미등록 톤 2건</b> ("차분한" · "설레는")도 문맥 판단 성공 — 오탐 없음.</div>
+    <div class="footer-line">코드가 처리할 수 있는 것은 코드가, 판단이 필요한 자리는 판단이 — <span class="accent">경계가 살아있습니다.</span></div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide">
+    <div class="kicker"><span><b>마무리</b> · 11 / 13</span><span class="page-no">11 / 13</span></div>
+    <h1 class="title">제약 앞에서 <span class="accent">방향을 수정한</span> 판단</h1>
+    <div class="lead">완성된 산출물보다 방향을 수정하는 판단이 더 큰 신호입니다.</div>
+    <hr class="rule">
+    <div class="recover-grid">
+      <div class="recover-card">
+        <div class="tag">회복 01 · 역할 분리</div>
+        <h3>Streamlit 봇을 만들었다가<span class="sub">제출용과 시연용의 경계를 재확인.</span></h3>
+        <p>"재현성 = 하나의 앱"이라 여겨 Anthropic API를 직접 부르는 Streamlit을 만들었지만, 과제 제약 "실행 중 외부 AI 호출 앱 금지"와 부딪힌다는 걸 확인.</p>
+        <div class="highlight">"자동화 = 제출물도 하나의 앱"이라는 전제 자체가 틀렸음을 인정.</div>
+        <div class="result">→ 제출용은 스크립트 + 스킬, 시연용은 <span class="accent">별도 Streamlit</span>(현장 승인 하 실시간 API)으로 분리.</div>
+      </div>
+      <div class="recover-card">
+        <div class="tag">회복 02 · 규칙 유지</div>
+        <h3>제출 직전 QA에서<span class="sub">규칙 위반을 스스로 발견.</span></h3>
+        <p>문서화한 규칙과 실제 산출물이 어긋난 곳을 /review로 발견 — 블로그 13건 500자 미달, 인스타 12건 #학원관리 누락.</p>
+        <div class="highlight">규칙을 낮추지 않고, 산출물을 규칙에 맞췄습니다.</div>
+        <div class="result">→ <span class="accent">25건 전량 보완</span>, 재검증 통과.</div>
+      </div>
+    </div>
+    <div class="footer-line">제약 앞에서 방향을 수정하는 판단은, 완성된 산출물보다 <span class="accent">큰 신호</span>입니다.</div>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide">
+    <div class="kicker"><span><b>마무리</b> · 12 / 13</span><span class="page-no">12 / 13</span></div>
+    <h1 class="title">한계, 그리고 <span class="accent">다음 걸음</span></h1>
+    <div class="lead">규칙은 지금 완성됐고, 다음 단계는 실측입니다.</div>
+    <hr class="rule">
+    <div class="limit-grid">
+      <div class="col">
+        <div class="col-label">이번에 못 한 것</div>
+        <div class="limit-item"><span class="n">01</span><div><b>실제 채널 성과 측정</b><span>Before/After 시간 수치는 문제 정의서 기준 추정치 (실측 아님).</span></div></div>
+        <div class="limit-item"><span class="n">02</span><div><b>채널 API 실연동</b><span>블로그 자동 발행 · 카카오 API (과제 범위 밖).</span></div></div>
+        <div class="limit-item"><span class="n">03</span><div><b>발행 캘린더 구체화</b><span>Challenge 기획안을 주/월 단위로 매핑.</span></div></div>
+      </div>
+      <div class="col next">
+        <div class="col-label">다음에 할 것</div>
+        <div class="limit-item"><span class="n">01</span><div><b>실측 성과로 규칙 재검증</b><span>A/B 테스트 설계 · 채널별 CTR·전환 비교.</span></div></div>
+        <div class="limit-item"><span class="n">02</span><div><b>채널 API 연동</b><span>원장이 클릭 한 번으로 3채널 동시 발행.</span></div></div>
+        <div class="limit-item"><span class="n">03</span><div><b>신기능 8건 패턴 분석</b><span>데이터형 · 행정자동화형 · 현장관리형.</span></div></div>
+      </div>
+    </div>
+    <div class="footer-line">규칙은 지금 완성됐고, 다음 단계는 <span class="accent">실측</span>입니다.</div>
+  </section>
+
+  <!-- 13 : closing -->
+  <section class="slide cover">
+    <div class="eyebrow">CLOSING</div>
+    <div class="track">질문과 피드백을 환영합니다</div>
+    <h1>감사합니다</h1>
+    <div class="sub">채널마다 다른 건 글이 아니라, <span class="accent">심리 트리거</span>였습니다.</div>
+    <div class="meta"><span>발표자 · <b>hyunjiseup</b></span><span><b>Q&A</b></span></div>
+  </section>
+
+  <!-- A1 -->
+  <section class="slide">
+    <div class="kicker"><span><b>APPENDIX · A1</b></span><span class="page-no">심사 후 자료</span></div>
+    <h1 class="title">채널 전략 상세 · <span class="accent">type별 강조 매핑</span></h1>
+    <div class="lead">"신기능·이벤트·후기 type별로도 채널마다 강조점이 다릅니다" — source: channel-strategy.md §3</div>
+    <table class="matrix">
+      <thead><tr><th>TYPE</th><th>BLOG · 신뢰</th><th class="accent">INSTAGRAM · 공감</th><th>KAKAO · 행동</th><th>목적</th></tr></thead>
+      <tbody>
+        <tr><td class="type"><b>신기능</b><span>Feature</span></td><td>기능 소개 + 사용법 + 도입 전후 비교</td><td>"이런 불편 있으셨죠?" 공감 + 한 줄 요약</td><td>[신기능] 출시 알림 + 바로 써보기 링크</td><td>기존 회원<br>재활성화</td></tr>
+        <tr><td class="type"><b>이벤트</b><span>Event</span></td><td>이벤트 상세 + 참여 방법 + 혜택 정리</td><td>혜택 요약 + 기간 강조 + "저장해두세요"</td><td>마감일·선착순 강조 + 신청 링크</td><td>신규 가입<br>직접 유도</td></tr>
+        <tr><td class="type"><b>후기</b><span>Review</span></td><td>원장/학부모 인터뷰 형식 + 수치 포함</td><td>후기 인용구 한 줄 + "나도 해봐야겠다"</td><td>후기 핵심 한 줄 + 무료 체험 CTA</td><td>신뢰 구축<br>(진정성 트렌드)</td></tr>
+      </tbody>
+    </table>
+    <div class="lead" style="margin-bottom:12px;">TONE_HINT → 채널별 변형 (요약)</div>
+    <div class="tone-grid">
+      <div class="tone accent"><b>전문적인</b><div>블로그: 수치·스펙 중심<br>인스타: "확실히 달라졌어요"<br>카카오: 담백한 기능명 + 링크</div></div>
+      <div class="tone"><b>따뜻한/친근한</b><div>블로그: 경험담 인용<br>인스타: 공감 질문형<br>카카오: 감사 인사 + CTA</div></div>
+      <div class="tone"><b>밝은</b><div>블로그: 시즌 기획 의도<br>인스타: 이모지 + 가벼운 어투<br>카카오: 혜택 강조 + 이모지</div></div>
+      <div class="tone"><b>긴급한</b><div>블로그: 기간 한정 소제목<br>인스타: "마감임박" 강조<br>카카오: ⏰🔥 + 날짜</div></div>
+      <div class="tone"><b>자랑스러운</b><div>블로그: 성과 수치 소제목<br>인스타: 수치 굵게 한 줄<br>카카오: 수치 + "실제 후기"</div></div>
+    </div>
+    <div class="footer-line" style="font-weight:400;font-size:13px;color:var(--sub);">3 types × 3 channels × 5 tones = <b style="color:var(--ink)">45가지 규칙 조합</b>이 판단의 좌표 역할을 합니다.</div>
+  </section>
+
+  <!-- A2 -->
+  <section class="slide">
+    <div class="kicker"><span><b>APPENDIX · A2</b></span><span class="page-no">심사 후 자료</span></div>
+    <h1 class="title"><span class="accent">의사결정</span> 로그</h1>
+    <div class="lead">판단은 '옳은 것'을 고르는 게 아니라, '왜 다른 대안을 버렸는지'를 남기는 것.</div>
+    <table class="decisions">
+      <thead><tr><th>#</th><th>결정</th><th>이유</th><th>대안 (버린 것)</th><th>영향</th></tr></thead>
+      <tbody>
+        <tr><td class="num">01</td><td><b>완전 중복 행 뒤 id 제거</b></td><td>채널 중복 게시 = 복붙 감점 리스크</td><td>두 id에 동일 콘텐츠 생성 (실익 없음)</td><td><b>id 025 제거</b> · 24건으로 재구성</td></tr>
+        <tr><td class="num">02</td><td><b>tone_hint 표기 정규화</b></td><td>표기 흔들리면 채널 전략 일관성 붕괴</td><td>매번 수동 확인 (반복 작업)</td><td>id 017 "긴박" → "긴급한"</td></tr>
+        <tr><td class="num">03</td><td><b>detail 결측 [추론:…] 표시</b></td><td>추론과 원본을 섞으면 신뢰도↓</td><td>결측 행 스킵 (커버리지↓)</td><td>id 012 · id 020 투명 보완</td></tr>
+        <tr><td class="num">04</td><td><b>Challenge 가중치 40/35/25</b></td><td>미션 목표(신규 유치)에 최고 가중치 부여</td><td>균등 33.3% (목표 연결성↓)</td><td>P0 95점 · P1 70점 산정</td></tr>
+        <tr><td class="num">05</td><td><b>제출 직전 QA — 규칙 유지</b></td><td>문서 규칙을 낮추기보다 산출물을 규칙에 맞춤</td><td>안내문을 실제 계산에 맞춤</td><td>블로그 13건 · 인스타 12건 보완</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- A3 -->
+  <section class="slide">
+    <div class="kicker"><span><b>APPENDIX · A3</b></span><span class="page-no">심사 후 자료</span></div>
+    <h1 class="title">재현성 실측 + <span class="accent">산출물 예시 3건</span></h1>
+    <div class="lead">정제 로그 + type/tone 다양한 산출물 3건 — source: cleaning_report.md, output/</div>
+    <div class="miniblock">
+      <div class="g4">
+        <div><div class="n">25 → 24</div><p><b>중복 1건 제거</b><br>id 025 = id 001 완전 중복</p></div>
+        <div><div class="n accent">톤 정규화</div><p><b>id 017</b> "긴박" → "긴급한"<br>008 · 014와 통일</p></div>
+        <div><div class="n accent">detail 보완</div><p><b>id 012 · 020</b><br>[추론:…] 투명 표시</p></div>
+        <div><div class="n">type 분포</div><p>신기능 8 · 이벤트 8 · 후기 8<br>완벽 균형</p></div>
+      </div>
+    </div>
+    <div class="note-line">재현 검증: 더미 CSV 2세트(8건·5건) 재실행 → 처리 결과 <b>100% 일치</b> · 미등록 톤 2건 문맥 판단 성공.</div>
+    <div class="lead" style="margin-bottom:12px;font-weight:600;color:var(--ink);">케이스별 산출물 3건 — TYPE / TONE 다양성</div>
+    <div class="case-grid">
+      <div class="case-card">
+        <div class="hd"><span class="ch">#003 · 후기</span><span class="cnt accent">tone: 따뜻한</span></div>
+        <p class="ttl">참좋은 보습학원 · 출결 자동화</p>
+        <p><b>BLOG · 574자</b>
+"출석부와 씨름하던 10년 …
+행정 업무 절반 감소" 인용
+
+<b>INSTAGRAM · 77자</b>
+"행정 업무가 절반으로 줄었어요" 😊
+10년 차 원장님의 진짜 후기...
+
+<b>KAKAO · 72자</b>
+😊 "행정이 절반으로 줄었어요"
+참좋은 보습학원 후기... → [링크]</p>
+      </div>
+      <div class="case-card">
+        <div class="hd"><span class="ch">#008 · 이벤트</span><span class="cnt accent">tone: 긴급한</span></div>
+        <p class="ttl">코딩나무 코딩학원 · 30일 무료 체험</p>
+        <p><b>BLOG</b>
+신규 원장 30일 전액 무료
+강한 CTA로 가입 유도
+
+<b>INSTAGRAM · 64자</b>
+🚀 학원 앱 도입, 고민만 하고
+계셨나요? 30일 전액 무료 체험...
+
+<b>KAKAO · 64자</b>
+🚀 [지금 가입] 30일 전액 무료 체험!
+부담 없이 시작... → [링크]</p>
+      </div>
+      <div class="case-card">
+        <div class="hd"><span class="ch">#014 · 이벤트</span><span class="cnt accent">tone: 긴급한</span></div>
+        <p class="ttl">사이언스랩 과학학원 · 여름 캠프</p>
+        <p><b>BLOG</b>
+8월 여름 캠프 조기 등록 15% 할인
+정원 마감 임박 강조
+
+<b>INSTAGRAM · 60자</b>
+여름 캠프 조기등록 15% 할인 ⏳
+정원 마감 임박!
+
+<b>KAKAO · 68자</b>
+⏳ [마감임박] 여름 캠프 15% 할인!
+지금 신청하기 → [링크]</p>
+      </div>
+    </div>
+    <div class="footer-line" style="font-weight:400;font-size:13px;color:var(--sub);">같은 "긴급한" 톤도 #008(신규 가입 CTA)과 #014(할인 마감)에서 표현이 다름 — 규칙은 동일, 판단이 문맥에 맞게 착지.</div>
+  </section>
+
+</div>
+</body>
+</html>
